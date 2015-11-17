@@ -1,6 +1,7 @@
 import Mirage, {faker} from 'ember-cli-mirage';
 
 export default Mirage.Factory.extend({
-  firstName: faker.name.firstName,
-  lastName: faker.name.lastName,
+  first_name: faker.name.firstName,
+  last_name: faker.name.lastName,
+  genre: faker.company.bsBuzz
 });

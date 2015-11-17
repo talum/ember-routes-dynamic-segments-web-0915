@@ -57,7 +57,7 @@ In our example router, the route for `/artists` is simply `artists`. We use this
 {{link-to "All Artists" "artists"}}
 ```
 
-The path to something like `/artists/1` is named `artists.artist`. Using this in the link-to helper looks like this:
+The path to something like `/artists/1` is named `artists.artist`. Using this in the `link-to` helper looks like this:
 ```html
 {{link-to "See artist 1" "artists.artist" 1}}
 ```
@@ -67,7 +67,7 @@ Since it's a dynamic segment, we have to pass in the part that's *dynamic*.
 ## Models
 Routes are responsible for loading a model. We're going to be using [Ember Data](http://guides.emberjs.com/v2.1.0/models/) to fetch data from an endpoint. We'll be covering Ember Data in more detail in future lessons but for now, all we need to know is how to get all `artists` and how to get a single `artist`.
 
-Within our route's `model` method, we can return all of the artists by returning the result of `this.store.findAll('artist')`. This works because we have a model in `app/models/artist.js`.
+Within our route's `model` method, we can get all of the artists by returning the result of `this.store.findAll('artist')`. This works because we have a model in `app/models/artist.js`.
 
 We'll use the `findRecord` method to find a specific artist. By setting the `path` option in our router to a dynamic segment, the `model` method in the route is called with an argument. The argument is an object with a property named after the dynamic segment you put in the router.
 
@@ -103,6 +103,19 @@ export default Ember.Route.extend({
 });
 ```
 ![Yea](http://media0.giphy.com/media/d8hmw74CXBdXW/200.gif)
+
+## Templates
+In the generated templates you'll see `{{outlet}}`. This is a lot like `yield` in rails templates, except it's used a LOT in Ember. If you look in `app/templates/application.hbs`, you'll see `{{outlet}}`. When you generate your `artists` route, the template will have `{{outlet}}`.
+
+![getinsertpic.com](http://media0.giphy.com/media/B9wll4m6KLtyE/200.gif)
+
+You can probably see that the template in `app/templates/artists.hbs` gets rendered into `app/templates/application.hbs`'s `{{outlet}}`, but what get's rendered into `artists.hbs`'s `{{outlet}}`?
+
+### If your urls are nested your templates are nested
+
+Ember is going to see that your route is `artists.artist` and will render the `artist.hbs` template inside of `artists.hbs`... which is inside of `application.hbs`.
+
+ˆ![Inside Man](http://media1.giphy.com/media/xlTwaFb20TVjW/200.gif)
 
 ## Generators
 You can generate a route and have it automatically write the path for you by using the generator's `path` option. Say we wanted to create "artists.artist" with a dynamic segment of `:artist_id`. Here's what we'd run:
